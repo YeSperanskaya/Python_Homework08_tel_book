@@ -37,9 +37,19 @@ def save_contact():
     data = read_file()
     name = input("Введите имя контакта: ")
     number = input("Введите номер телефона без пробелов: ")
-    data[name] = number
-    print('Контакт добавлен!')
-    write_file(data)
+    if examination_number(number):
+        int_number = int(number)
+        if name in data:
+            print('Такой контакт уже есть!')
+        else:
+            data[name] = int_number
+            print('Контакт добавлен!')
+            write_file(data)
+    else:
+        print("Вы неверно ввели номер телефона! Контакт не сохранен!")
+
+
+
 
 # Изменить контакт
 def change_contact():
@@ -48,7 +58,6 @@ def change_contact():
     if name in data:
         new_name = input("Введите новое имя контакта: ")
         new_number = input("Введите новый номер контакта: ")
-        # тут будет ссылка на функцию удаления
         del data[name]
         data[new_name] = new_number
         print('Контакт изменен!')
@@ -65,6 +74,7 @@ def delete_contact():
         print('Контакт удалён!')
         write_file(data)
 
+# Импорт контакта
 def import_contact():
     new_file = input("Введите название файла в который необходимо импоритировать контакты: ")
     data = read_file()
@@ -75,12 +85,35 @@ def import_contact():
         book = eval(new_data)
         print(book)
 
+
+# Проверка можно ли преобразовать строку в число
+def is_numeric(num):
+    try:
+        float(num)
+        return True
+    except ValueError:
+        return False
+# Проверка правильно введенного номера
+def examination_number(numb):
+    if is_numeric(numb):
+        int_numb = int(numb)
+        if (int_numb >=99 and int_numb <= 100000000000000):
+            return True
+        else:
+            return False
+    else:
+        return False
+    # мне надо чтобы номер преобразовываался в строку но это выполнится в самой функции где оно применяется, а тут надо проверить его функциональность и определенные характеристики
+
+
+
+print(read_file())
 save_contact()
 print(read_file())
-change_contact()
-print(read_file())
-delete_contact()
-print(read_file())
-import_contact()
+# change_contact()
+# print(read_file())
+# delete_contact()
+# print(read_file())
+# import_contact()
 
 
