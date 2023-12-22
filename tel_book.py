@@ -65,7 +65,15 @@ def delete_contact():
         print('Контакт удалён!')
         write_file(data)
 
-
+def import_contact():
+    new_file = input("Введите название файла в который необходимо импоритировать контакты: ")
+    data = read_file()
+    with open(new_file, 'w') as f:
+        f.write(json.dumps(data))
+    with open(new_file, 'r') as f:
+        new_data = f.read()
+        book = eval(new_data)
+        print(book)
 
 save_contact()
 print(read_file())
@@ -73,5 +81,6 @@ change_contact()
 print(read_file())
 delete_contact()
 print(read_file())
+import_contact()
 
 
