@@ -58,10 +58,14 @@ def change_contact():
     if name in data:
         new_name = input("Введите новое имя контакта: ")
         new_number = input("Введите новый номер контакта: ")
-        del data[name]
-        data[new_name] = new_number
-        print('Контакт изменен!')
-        write_file(data)
+        if examination_number(new_number):
+            int_number = int(new_number)    
+            del data[name]
+            data[new_name] = int_number
+            print('Контакт изменен!')
+            write_file(data)
+        else:
+            print("Вы неверно ввели номер телефона! Контакт не изменен!") 
     else:
         print('Такого контакта нет, но вы можете его создать используя функцию "сохранить".')
 
@@ -86,6 +90,7 @@ def import_contact():
         print(book)
 
 
+# Блок проверки введенного номера телефона
 # Проверка можно ли преобразовать строку в число
 def is_numeric(num):
     try:
@@ -103,17 +108,16 @@ def examination_number(numb):
             return False
     else:
         return False
-    # мне надо чтобы номер преобразовываался в строку но это выполнится в самой функции где оно применяется, а тут надо проверить его функциональность и определенные характеристики
 
 
-
+# Команды работы телефонной книги
 print(read_file())
 save_contact()
 print(read_file())
-# change_contact()
-# print(read_file())
-# delete_contact()
-# print(read_file())
-# import_contact()
+change_contact()
+print(read_file())
+delete_contact()
+print(read_file())
+import_contact()
 
 
